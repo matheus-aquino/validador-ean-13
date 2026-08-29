@@ -1,0 +1,9 @@
+# Binarios e artefatos de compilacao
+programa
+*.o
+*.out
+*.dSYM/
+
+# macOS
+.DS_Store
+.vscode/
