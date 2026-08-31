@@ -26,6 +26,27 @@ int validar_formato(const char *codigo) {
     return 1;
 }
 
+int calcular_dv(const char *codigo){
+    if (!validar_formato((codigo))) return 0;
+    int tamanho = strlen(codigo) - 1;
+    int soma = 0;
+    int dv = 0;
+    for (int i = 0; i < tamanho; i++) {
+        int digito = codigo[i] - '0';
+        if (i % 2 == 0) {
+            soma += digito * 1;
+        } else {
+            soma += digito * 3;
+        }
+    }
+    dv = ((10 - soma %10) % 10);
+    if ((soma + dv) %10 != 0) {
+        return -1;
+    } else {
+        return dv;
+    }
+}
+
 int main() {
     Produto *lista = NULL;
     char codigo[14] = "7891000100103";
@@ -33,5 +54,8 @@ int main() {
         printf("Formato de código inválido\n");
     }
     
+    int dv = calcular_dv(&codigo);
+    printf("O DV é %d\n", dv);
+
     return 0;
 }
