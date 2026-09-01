@@ -47,15 +47,44 @@ int calcular_dv(const char *codigo){
     }
 }
 
+int cadastrar(Produto **lista, int *n, const char *codigo, const char *nome) {
+    if (!validar_formato(codigo)) return 0;
+    if ((*n) < 0) return 0;
+
+    
+    Produto *tmp = realloc(*lista, (*n + 1) * sizeof(*tmp));
+    if (tmp == NULL) return 0;
+
+    (*lista) = tmp;
+
+    for (int i = 0; i < (*n); i++) {
+        if (strcmp((*lista)[i].codigo, codigo) == 0) return -2;
+    }
+
+    strcpy((*lista)[(*n)].codigo, codigo);
+    strcpy((*lista)[(*n)].nome, nome);
+    
+    (*n)++;
+    return 1;
+}
+
 int main() {
     Produto *lista = NULL;
-    char codigo[14] = "7891000100103";
+    int tamanho = 0;
+    //char codigo[14] = "7891000100103";
+    /*
     if (!validar_formato(&codigo)) {
         printf("Formato de código inválido\n");
     }
-    
-    int dv = calcular_dv(&codigo);
-    printf("O DV é %d\n", dv);
+    */
 
+    //int dv = calcular_dv(&codigo);
+    //printf("O DV é %d\n", dv);
+
+    if (cadastrar(&lista, &tamanho, "7891000100103", "ARROZ 5KG") == -2) printf("Produto já existe\n");
+    if (cadastrar(&lista, &tamanho, "7891000200209", "FEIJAO 1KG") == -2) printf("Produto já existe\n");
+    if (cadastrar(&lista, &tamanho, "7891000200209", "FEIJAO 1KG") == -2) printf("Produto já existe\n");
+    printf("Produto %s | Nome: %s \n", lista[0].codigo, lista[0].nome);
+    printf("Produto %s | Nome: %s \n", lista[1].codigo, lista[1].nome);
     return 0;
 }
