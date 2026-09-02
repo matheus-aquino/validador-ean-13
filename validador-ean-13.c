@@ -79,6 +79,12 @@ int buscar_por_codigo(const Produto *lista, int n, const char *codigo) {
     return -1;
 }
 
+void liberar(Produto **lista, int *n) {
+    free(*lista);
+    *lista = NULL;
+    *n = 0;
+}
+
 int main() {
     Produto *lista = NULL;
     int tamanho = 0;
@@ -103,5 +109,7 @@ int main() {
 
     index_codigo = buscar_por_codigo(lista, tamanho, "78910002002091");
     printf("O codigo 78910002002091 está no index %d\n", index_codigo);
+
+    liberar(&lista, &tamanho);
     return 0;
 }
