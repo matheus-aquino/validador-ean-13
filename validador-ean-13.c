@@ -68,6 +68,17 @@ int cadastrar(Produto **lista, int *n, const char *codigo, const char *nome) {
     return 1;
 }
 
+int buscar_por_codigo(const Produto *lista, int n, const char *codigo) {
+    if ((n) < 0) return 0;
+    int i;
+    for (i = 0; i < n; i++) {
+        if ((strcmp((lista)[i].codigo, codigo)) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int main() {
     Produto *lista = NULL;
     int tamanho = 0;
@@ -86,5 +97,11 @@ int main() {
     if (cadastrar(&lista, &tamanho, "7891000200209", "FEIJAO 1KG") == -2) printf("Produto já existe\n");
     printf("Produto %s | Nome: %s \n", lista[0].codigo, lista[0].nome);
     printf("Produto %s | Nome: %s \n", lista[1].codigo, lista[1].nome);
+
+    int index_codigo = buscar_por_codigo(lista, tamanho, "7891000100103");
+    printf("O codigo 7891000100103 está no index %d\n", index_codigo);
+
+    index_codigo = buscar_por_codigo(lista, tamanho, "78910002002091");
+    printf("O codigo 78910002002091 está no index %d\n", index_codigo);
     return 0;
 }
