@@ -39,7 +39,7 @@ int cadastrar(Produto **lista, int *n, const char *codigo, const char *nome) {
     if ((*n) < 0) return 0;
     if (validar_formato(codigo) == 0) return 0;
     if (calcular_dv(codigo) != codigo[12] - '0') return -1;
-    if (buscar_por_codigo(*lista, *n, codigo) != -2) return -2;
+    if (buscar_por_codigo(*lista, *n, codigo) != -1) return -2;
 
     Produto *tmp = realloc(*lista, (*n + 1) * sizeof(*tmp));
     if (tmp == NULL) return 0;
@@ -60,7 +60,7 @@ int buscar_por_codigo(const Produto *lista, int n, const char *codigo) {
             return i;
         }
     }
-    return -2;
+    return -1;
 }
 
 void menu (const int cadastro_resultado, const char *codigo, const char *nome) {
@@ -95,7 +95,7 @@ int main() {
     int tamanho = 0;
 
     printf("=== VALIDADOR EAN-13 ===\n");
-    char codigo_parametro[14] = "7891000200209";
+    char codigo_parametro[14] = "7891000100103";
     char nome_parametro[31] = "ARROZ 5KG";
     int cadastro_resultado = cadastrar(&lista, &tamanho, codigo_parametro, nome_parametro);
     menu(cadastro_resultado, codigo_parametro, nome_parametro);
@@ -130,14 +130,14 @@ int main() {
     printf("PRODUTOS CADASTRADOS: %d\n", tamanho);
     
     int busca = buscar_por_codigo(lista, tamanho, "7891000200209");
-    if (busca != -2) {
+    if (busca != -1) {
         printf("BUSCA %s: INDICE %d %s\n", lista[busca].codigo, busca, lista[busca].nome);
     } else {
         printf("BUSCA %s: NAO ENCONTRADO\n", codigo_parametro);
     }
 
     busca = buscar_por_codigo(lista, tamanho, "7891000999996");
-    if (busca != -2) {
+    if (busca != -1) {
         printf("BUSCA %s: INDICE %d %s\n", lista[busca].codigo, busca, lista[busca].nome);
     } else {
         printf("BUSCA %s: NAO ENCONTRADO\n", codigo_parametro);
